@@ -1,0 +1,57 @@
+package com.example.backend.entity;
+
+import lombok.Data;
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+
+@Data
+@Entity
+@Table(name = "pets")
+public class Pet {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
+    private String name;
+
+    @Enumerated(EnumType.STRING)
+    private PetType type;
+
+    @Enumerated(EnumType.STRING)
+    private PetStatus status = PetStatus.AVAILABLE;
+
+    private String breed;
+    private Integer age;
+    private String gender;
+    private String color;
+    private String description;
+    private String healthStatus;
+    private String vaccination;
+    private String imageUrl = "default-pet.jpg";
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private User owner;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
+
+    public enum PetType {
+        DOG, CAT, RABBIT, BIRD, OTHER
+    }
+
+    public enum PetStatus {
+        AVAILABLE, // 可领养
+        ADOPTED, // 已领养
+        FOSTERED, // 寄养中
+        PENDING, // 待处理（通用）
+        PENDING_ADOPTION // 待领养（用于领养申请）
+    }
+}

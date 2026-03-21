@@ -1,0 +1,54 @@
+spring:
+  application:
+    name: pet-care-platform
+    
+  # H2内存数据库配置
+  datasource:
+    url: jdbc:h2:mem:petdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+    
+  # JPA配置
+  jpa:
+    hibernate:
+      ddl-auto: update  # 自动创建和更新表
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        format_sql: true
+        
+  # H2控制台
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      
+  # 文件上传
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 20MB
+      
+  # 资源文件
+  mvc:
+    static-path-pattern: /static/**
+  web:
+    resources:
+      static-locations: classpath:/static/
+      
+# 服务器配置
+server:
+  port: 8080
+  servlet:
+    context-path: /
+    encoding:
+      charset: UTF-8
+      enabled: true
+      
+# 日志配置
+logging:
+  level:
+    com.example.backend: INFO
+    org.springframework.web: INFO
