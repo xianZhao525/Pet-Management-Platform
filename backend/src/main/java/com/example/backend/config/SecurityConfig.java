@@ -42,10 +42,7 @@ public class SecurityConfig {
         @Bean
         public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
                 http
-                                // 禁用CSRF（API开发常用）
                                 .csrf(csrf -> csrf.disable())
-
-                                // 配置授权规则（Spring Boot 3.x 语法）
                                 .authorizeHttpRequests(auth -> auth
                                                 // 静态资源放行
                                                 .requestMatchers("/static/**", "/resources/**", "/public/**",
@@ -54,18 +51,21 @@ public class SecurityConfig {
                                                 .requestMatchers("/css/**", "/js/**", "/images/**", "/fonts/**")
                                                 .permitAll()
                                                 .requestMatchers("/favicon.ico").permitAll()
+                                                // ✅ 添加根路径放行
+                                                .requestMatchers("/", "/index").permitAll() // <-- 添加这一行
                                                 // 公共页面放行
-                                                .requestMatchers("/", "/index", "/pet/**", "/foster/**", "/donation/**",
+                                                .requestMatchers("/pet/**", "/foster/**", "/donation/**",
                                                                 "/adoption/**")
                                                 .permitAll()
                                                 // 用户认证相关页面放行
                                                 .requestMatchers("/user/login", "/user/register", "/user/logout")
                                                 .permitAll()
+                                                // 测试接口放行
+                                                .requestMatchers("/test").permitAll()
                                                 // 管理员路径 - 需要ROLE_ADMIN角色
                                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                                 // 其他请求需要认证
                                                 .anyRequest().authenticated())
-                                // 配置登出
                                 .logout(logout -> logout
                                                 .logoutUrl("/user/logout")
                                                 .logoutSuccessUrl("/user/login?logout=true")

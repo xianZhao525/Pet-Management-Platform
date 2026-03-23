@@ -54,7 +54,7 @@
 <script setup>
     import { computed } from 'vue'
     import { useRouter, useRoute } from 'vue-router'
-    import { useUserStore } from '@/stores/user'
+    // import { useUserStore } from '@/stores/user'
     import { ElMessage } from 'element-plus'
     import {
     Odometer,
