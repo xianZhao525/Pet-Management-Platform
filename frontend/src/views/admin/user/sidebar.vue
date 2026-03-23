@@ -34,7 +34,7 @@
       </el-menu-item>
 
       <el-menu-item index="/admin/donations">
-        <el-icon><Heart /></el-icon>
+        <el-icon><HeartFilled /></el-icon>
         <span>捐赠管理</span>
       </el-menu-item>
 
@@ -57,13 +57,13 @@
     // import { useUserStore } from '@/stores/user'
     import { ElMessage } from 'element-plus'
     import {
-    Odometer,
-    Paw,
-    Document,
-    User,
-    Heart,
-    House,
-    SwitchButton
+      Odometer,
+      Paw,
+      Document,
+      User,
+      HeartFilled,   // ✅ 改为 HeartFilled
+      House,
+      SwitchButton
     } from '@element-plus/icons-vue'
 
     const router = useRouter()

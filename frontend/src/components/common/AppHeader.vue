@@ -20,10 +20,12 @@
           <el-icon><Paw /></el-icon>
           <span>宠物列表</span>
         </el-menu-item>
+
         <el-menu-item index="/adoption/process">
-          <el-icon><Heart /></el-icon>
+          <el-icon><HeartFilled /></el-icon>
           <span>领养流程</span>
         </el-menu-item>
+
         <el-menu-item index="/donation">
           <el-icon><HandHoldingHeart /></el-icon>
           <span>捐赠支持</span>
@@ -64,11 +66,8 @@
 <script setup>
     import { computed } from 'vue'
     import { useRouter, useRoute } from 'vue-router'
-    import { useUserStore } from '@/stores/user'
-    import { 
-    Paw, House, Heart, HandHoldingHeart, Info, 
-    UserFilled, ArrowDown 
-    } from '@element-plus/icons-vue'
+    import { useUserStore } from '@/stores/userStore'
+    import { Paw, House, HeartFilled, HandHoldingHeart, Info, UserFilled, ArrowDown } from '@element-plus/icons-vue'
     import { ElMessage } from 'element-plus'
 
     const router = useRouter()

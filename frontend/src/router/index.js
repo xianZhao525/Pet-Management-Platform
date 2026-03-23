@@ -29,7 +29,7 @@ const router = createRouter({
         {
           path: '',
           name: 'Home',
-          component: () => import('@/App.vue')
+          component: () => import('@/views/Home.vue')
         },
         //宠物领养服务
         {
