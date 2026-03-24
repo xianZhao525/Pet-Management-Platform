@@ -114,82 +114,39 @@
 
 <style scoped>
     .footer {
-    background: #2c3e50;
-    color: #ecf0f1;
-    padding: 60px 0 20px;
-    margin-top: 60px;
+      background: #2c3e50;
+      color: #ecf0f1;
+      padding: 60px 0 20px;
+      margin-top: 60px;
     }
 
-    .footer h5 {
-    color: #fff;
-    margin-bottom: 20px;
-    font-size: 18px;
-    font-weight: 600;
+    /* 新增：让三栏容器水平居中且均匀分布 */
+    .footer .row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
-    .footer h5 i {
-    color: #ff6b6b;
-    margin-right: 8px;
-    }
-
-    .footer .text-muted {
-    color: #bdc3c7 !important;
-    line-height: 1.6;
-    }
-
-    .footer ul li {
-    margin-bottom: 12px;
-    }
-
-    .footer ul li a {
-    text-decoration: none;
-    transition: all 0.3s ease;
-    display: inline-block;
-    }
-
-    .footer ul li a:hover {
-    color: #fff !important;
-    transform: translateX(5px);
-    }
-
-    .contact-info p {
-    margin-bottom: 12px;
-    }
-
-    .contact-info i {
-    width: 25px;
-    color: #ff6b6b;
-    }
-
-    .footer hr {
-    background-color: #34495e;
-    margin: 30px 0 20px;
-    }
-
-    .footer .text-center p {
-    margin-bottom: 8px;
-    }
-
-    .footer .text-center a {
-    text-decoration: none;
-    transition: color 0.3s ease;
-    }
-
-    .footer .text-center a:hover {
-    color: #fff !important;
-    }
-
-    /* 响应式设计 */
-    @media (max-width: 768px) {
-    .footer {
-        padding: 40px 0 20px;
-    }
-    
     .footer .col-md-4 {
-        margin-bottom: 30px;
-        text-align: center;
+      flex: 1;
+      min-width: 250px;
+      padding: 0 15px;
+      text-align: center;  /* 内容居中，可根据喜好改为 left */
     }
-    
+
+    /* 响应式 */
+    @media (max-width: 768px) {
+      .footer .row {
+        flex-direction: column;
+        align-items: center;
+      }
+      .footer .col-md-4 {
+        text-align: center;
+        margin-bottom: 30px;
+        width: 100%;
+      }
     .footer ul li a:hover {
         transform: translateX(0);
     }
