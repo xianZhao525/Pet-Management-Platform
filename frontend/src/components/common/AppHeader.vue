@@ -2,7 +2,7 @@
   <header class="app-header">
     <div class="header-container">
       <div class="logo" @click="goToHome">
-        <!-- <el-icon :size="28"><Paw /></el-icon> -->
+        <el-icon :size="28"><Paw /></el-icon>
         <span>宠物领养平台</span>
       </div>
       
@@ -13,7 +13,7 @@
         class="header-menu"
       >
         <el-menu-item index="/">
-          <!-- <el-icon><House /></el-icon> -->
+          <el-icon><House /></el-icon>
           <span>首页</span>
         </el-menu-item>
         <el-menu-item index="/pet/list">
@@ -67,7 +67,7 @@
     import { computed } from 'vue'
     import { useRouter, useRoute } from 'vue-router'
     import { useUserStore } from '@/stores/userStore'
-    // import { Paw, House, HeartFilled, HandHoldingHeart, Info, UserFilled, ArrowDown } from '@element-plus/icons-vue'
+    import { Paw, House, HeartFilled, HandHoldingHeart, Info, UserFilled, ArrowDown } from '@element-plus/icons-vue'
     import { ElMessage } from 'element-plus'
 
     const router = useRouter()
