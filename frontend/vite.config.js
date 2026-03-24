@@ -16,6 +16,8 @@ export default defineConfig({
   },
   server: {
     port: 5173,
+    // 关键配置：所有路由都回退到 index.html，解决 history 模式刷新 404 问题
+    historyApiFallback: true,
     proxy: {
       '/api': {
         target: 'http://localhost:8080',

@@ -7,10 +7,12 @@
         <p>我们连接爱心人士与需要帮助的宠物，让领养变得简单、可靠。每一只宠物都值得被爱，每一次领养都是拯救一个生命。</p>
         <div style="margin-top: 40px;">
           <el-button type="primary" size="large" @click="navigateTo('/pet/list')" class="hero-btn">
-            <el-icon><Search /></el-icon> 浏览待领养宠物
+            <!-- <el-icon><Search /></el-icon>  -->
+            浏览待领养宠物
           </el-button>
           <el-button size="large" @click="navigateTo('/donate')" class="hero-btn-secondary">
-            <el-icon><HeartFilled /></el-icon> 爱心捐赠
+            <!-- <el-icon><HeartFilled /></el-icon>  -->
+            爱心捐赠
           </el-button>
         </div>
       </div>
@@ -78,7 +80,8 @@
         
         <div class="view-more">
           <el-button type="primary" @click="navigateTo('/pet/list')">
-            <el-icon><Paw /></el-icon> 查看待领养宠物
+            <!-- <el-icon><Paw /></el-icon>  -->
+            查看待领养宠物
           </el-button>
         </div>
       </div>
@@ -89,7 +92,7 @@
 <script setup>
   import { onMounted, onUnmounted } from 'vue'
   import { useRouter } from 'vue-router'
-  import { Search, HeartFilled, Paw } from '@element-plus/icons-vue'
+  //import { Search, HeartFilled, Paw } from '@element-plus/icons-vue'
 
   const router = useRouter()
 

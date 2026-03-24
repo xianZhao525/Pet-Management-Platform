@@ -63,7 +63,8 @@
 
         <div class="text-center mt-3">
           <el-button type="primary" plain @click="goToAdoptions">
-            <el-icon><List /></el-icon> 查看所有申请
+            <!-- <el-icon><List /></el-icon>  -->
+            查看所有申请
           </el-button>
         </div>
       </div>
@@ -74,7 +75,7 @@
 <script setup>
     import { ref, onMounted } from 'vue'
     import { useRouter } from 'vue-router'
-    import { List } from '@element-plus/icons-vue'
+    //import { List } from '@element-plus/icons-vue'
     import { getDashboardStats, getRecentAdoptions } from '@/api/adminApi'
 
     const router = useRouter()

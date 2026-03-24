@@ -14,37 +14,37 @@
       router
     >
       <el-menu-item index="/admin/dashboard">
-        <el-icon><Odometer /></el-icon>
+        <i class="fas fa-tachometer-alt"></i>
         <span>控制台</span>
       </el-menu-item>
 
       <el-menu-item index="/admin/pets">
-        <el-icon><Paw /></el-icon>
+        <i class="fas fa-paw"></i>
         <span>宠物管理</span>
       </el-menu-item>
 
       <el-menu-item index="/admin/adoptions">
-        <el-icon><Document /></el-icon>
+        <i class="fas fa-file-alt"></i>
         <span>领养申请</span>
       </el-menu-item>
 
       <el-menu-item index="/admin/users">
-        <el-icon><User /></el-icon>
+        <i class="fas fa-users"></i>
         <span>用户管理</span>
       </el-menu-item>
 
       <el-menu-item index="/admin/donations">
-        <el-icon><HeartFilled /></el-icon>
+        <i class="fas fa-heart"></i>
         <span>捐赠管理</span>
       </el-menu-item>
 
       <el-menu-item index="/">
-        <el-icon><House /></el-icon>
+        <i class="fas fa-home"></i>
         <span>返回首页</span>
       </el-menu-item>
 
       <el-menu-item index="/logout" @click="handleLogout">
-        <el-icon><SwitchButton /></el-icon>
+        <i class="fas fa-sign-out-alt"></i>
         <span>退出登录</span>
       </el-menu-item>
     </el-menu>
@@ -52,52 +52,34 @@
 </template>
 
 <script setup>
-    import { computed } from 'vue'
-    import { useRouter, useRoute } from 'vue-router'
-    // import { useUserStore } from '@/stores/user'
-    import { ElMessage } from 'element-plus'
-    import {
-      Odometer,
-      Paw,
-      Document,
-      User,
-      HeartFilled,   // ✅ 改为 HeartFilled
-      House,
-      SwitchButton
-    } from '@element-plus/icons-vue'
+  import { computed } from 'vue'
+  import { useRouter, useRoute } from 'vue-router'
+  import { useUserStore } from '@/stores/userStore'   // ✅ 必须导入
+  import { ElMessage } from 'element-plus'
+  // 删除所有 @element-plus/icons-vue 的导入
 
-    const router = useRouter()
-    const route = useRoute()
-    const userStore = useUserStore()
+  const router = useRouter()
+  const route = useRoute()
+  const userStore = useUserStore()   // ✅ 现在可用
 
-    // 当前激活的菜单
-    const activeMenu = computed(() => route.path)
-
-    // 用户名
-    const username = computed(() => userStore.userInfo?.username || '管理员')
-
-    // 用户头像
-    const userAvatar = computed(() => {
+  const activeMenu = computed(() => route.path)
+  const username = computed(() => userStore.userInfo?.username || '管理员')
+  const userAvatar = computed(() => {
     const avatar = userStore.userInfo?.avatar
     if (!avatar) return '/images/avatars/default-avatar.png'
     if (avatar.startsWith('http')) return avatar
     return `/images/avatars/${avatar}`
-    })
+  })
 
-    // 退出登录
-    const handleLogout = async () => {
+  const handleLogout = async () => {
     await userStore.logout()
     ElMessage.success('退出成功')
     router.push('/login')
-    }
+  }
 
-    // 侧边栏折叠状态（可以从父组件传入）
-    const props = defineProps({
-    isCollapsed: {
-        type: Boolean,
-        default: false
-    }
-    })
+  const props = defineProps({
+    isCollapsed: { type: Boolean, default: false }
+  })
 </script>
 
 <style scoped>

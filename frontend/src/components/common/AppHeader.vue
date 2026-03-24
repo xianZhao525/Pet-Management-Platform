@@ -2,7 +2,7 @@
   <header class="app-header">
     <div class="header-container">
       <div class="logo" @click="goToHome">
-        <el-icon :size="28"><Paw /></el-icon>
+        <!-- <el-icon :size="28"><Paw /></el-icon> -->
         <span>宠物领养平台</span>
       </div>
       
@@ -13,25 +13,25 @@
         class="header-menu"
       >
         <el-menu-item index="/">
-          <el-icon><House /></el-icon>
+          <!-- <el-icon><House /></el-icon> -->
           <span>首页</span>
         </el-menu-item>
         <el-menu-item index="/pet/list">
-          <el-icon><Paw /></el-icon>
+          <!-- <el-icon><Paw /></el-icon> -->
           <span>宠物列表</span>
         </el-menu-item>
 
         <el-menu-item index="/adoption/process">
-          <el-icon><HeartFilled /></el-icon>
+          <!-- <el-icon><HeartFilled /></el-icon> -->
           <span>领养流程</span>
         </el-menu-item>
 
         <el-menu-item index="/donation">
-          <el-icon><HandHoldingHeart /></el-icon>
+          <!-- <el-icon><HandHoldingHeart /></el-icon> -->
           <span>捐赠支持</span>
         </el-menu-item>
         <el-menu-item index="/about">
-          <el-icon><Info /></el-icon>
+          <!-- <el-icon><Info /></el-icon> -->
           <span>关于我们</span>
         </el-menu-item>
       </el-menu>
@@ -40,9 +40,9 @@
         <template v-if="isLoggedIn">
           <el-dropdown @command="handleCommand">
             <div class="user-info">
-              <el-avatar :size="40" :icon="UserFilled" />
+              <!-- <el-avatar :size="40" :icon="UserFilled" /> -->
               <span class="username">{{ username }}</span>
-              <el-icon><ArrowDown /></el-icon>
+              <!-- <el-icon><ArrowDown /></el-icon> -->
             </div>
             <template #dropdown>
               <el-dropdown-menu>
@@ -67,7 +67,7 @@
     import { computed } from 'vue'
     import { useRouter, useRoute } from 'vue-router'
     import { useUserStore } from '@/stores/userStore'
-    import { Paw, House, HeartFilled, HandHoldingHeart, Info, UserFilled, ArrowDown } from '@element-plus/icons-vue'
+    // import { Paw, House, HeartFilled, HandHoldingHeart, Info, UserFilled, ArrowDown } from '@element-plus/icons-vue'
     import { ElMessage } from 'element-plus'
 
     const router = useRouter()

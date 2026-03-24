@@ -31,7 +31,8 @@
       </div>
       <div class="header-actions">
         <el-button type="primary" @click="goToAdd">
-          <el-icon><Plus /></el-icon> 添加宠物
+          <!-- <el-icon><Plus /></el-icon>  -->
+          添加宠物
         </el-button>
       </div>
     </div>
@@ -64,12 +65,14 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="handleSearch">
-            <el-icon><Search /></el-icon> 搜索
+            <!-- <el-icon><Search /></el-icon>  -->
+            搜索
           </el-button>
         </el-form-item>
         <el-form-item>
           <el-button @click="resetSearch">
-            <el-icon><Refresh /></el-icon> 重置
+            <!-- <el-icon><Refresh /></el-icon>  -->
+            重置
           </el-button>
         </el-form-item>
       </el-form>
@@ -146,7 +149,7 @@
                 @click="viewDetail(row.id)"
                 title="查看详情"
               >
-                <el-icon><View /></el-icon>
+                <!-- <el-icon><View /></el-icon> -->
               </el-button>
               <el-button
                 size="small"
@@ -155,7 +158,7 @@
                 @click="editPet(row.id)"
                 title="编辑"
               >
-                <el-icon><Edit /></el-icon>
+                <!-- <el-icon><Edit /></el-icon> -->
               </el-button>
               <el-button
                 size="small"
@@ -164,7 +167,7 @@
                 @click="deletePet(row.id, row.name)"
                 title="删除"
               >
-                <el-icon><Delete /></el-icon>
+                <!-- <el-icon><Delete /></el-icon> -->
               </el-button>
             </div>
           </template>
@@ -191,7 +194,7 @@
     import { ref, reactive, onMounted } from 'vue'
     import { useRouter } from 'vue-router'
     import { ElMessage, ElMessageBox } from 'element-plus'
-    import { Plus, Search, Refresh, View, Edit, Delete } from '@element-plus/icons-vue'
+    //import { Plus, Search, Refresh, View, Edit, Delete } from '@element-plus/icons-vue'
     import { getPetList, deletePet as deletePetApi } from '@/api/petApi'
 
     const router = useRouter()

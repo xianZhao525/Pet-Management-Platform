@@ -109,7 +109,7 @@
                 @click="viewDetail(row.id)"
                 title="查看详情"
               >
-                <el-icon><View /></el-icon>
+                <!-- <el-icon><View /></el-icon> -->
               </el-button>
               
               <template v-if="row.status === 'PENDING'">
@@ -120,7 +120,7 @@
                   @click="openReviewModal(row, 'approve')"
                   title="批准申请"
                 >
-                  <el-icon><Check /></el-icon>
+                  <!-- <el-icon><Check /></el-icon> -->
                 </el-button>
                 
                 <el-button
@@ -130,7 +130,7 @@
                   @click="openReviewModal(row, 'reject')"
                   title="拒绝申请"
                 >
-                  <el-icon><Close /></el-icon>
+                  <!-- <el-icon><Close /></el-icon> -->
                 </el-button>
               </template>
               
@@ -142,7 +142,7 @@
                   @click="completeAdoption(row.id)"
                   title="完成领养"
                 >
-                  <el-icon><Check /></el-icon>
+                  <!-- <el-icon><Check /></el-icon> -->
                 </el-button>
               </template>
             </div>
@@ -198,7 +198,7 @@
     import { ref, computed, onMounted } from 'vue'
     import { useRouter } from 'vue-router'
     import { ElMessage, ElMessageBox } from 'element-plus'
-    import { View, Check, Close } from '@element-plus/icons-vue'
+    //import { View, Check, Close } from '@element-plus/icons-vue'
     import { getAdoptions, approveAdoption, rejectAdoption, completeAdoption } from '@/api/adoptionApi'
 
     const router = useRouter()

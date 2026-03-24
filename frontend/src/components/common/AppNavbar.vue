@@ -26,9 +26,9 @@
         <div v-if="isLoggedIn" class="user-menu">
           <el-dropdown @command="handleUserCommand" trigger="click">
             <div class="user-info">
-              <el-avatar :size="36" :icon="UserFilled" />
+              <!-- <el-avatar :size="36" :icon="UserFilled" /> -->
               <span class="username">{{ username }}</span>
-              <el-icon><ArrowDown /></el-icon>
+              <!-- <el-icon><ArrowDown /></el-icon> -->
             </div>
             <template #dropdown>
               <el-dropdown-menu>
@@ -83,7 +83,7 @@
     import { useRouter, useRoute } from 'vue-router'
     import { useUserStore } from '@/stores/userStore'
     import { ElMessage } from 'element-plus'
-    import { UserFilled, ArrowDown } from '@element-plus/icons-vue'
+    // import { UserFilled, ArrowDown } from '@element-plus/icons-vue'
 
     const router = useRouter()
     const route = useRoute()

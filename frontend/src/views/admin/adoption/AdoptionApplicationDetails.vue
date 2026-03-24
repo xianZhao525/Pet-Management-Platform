@@ -162,10 +162,12 @@
               
               <div class="action-buttons">
                 <el-button type="success" @click="submitReview('approve')" :loading="submitting">
-                  <el-icon><Check /></el-icon> 批准申请
+                  <!-- <el-icon><Check /></el-icon>  -->
+                  批准申请
                 </el-button>
                 <el-button type="danger" @click="submitReview('reject')" :loading="submitting">
-                  <el-icon><Close /></el-icon> 拒绝申请
+                  <!-- <el-icon><Close /></el-icon>  -->
+                  拒绝申请
                 </el-button>
               </div>
             </div>
@@ -173,14 +175,16 @@
             <!-- 已批准状态显示完成按钮 -->
             <div v-if="adoption.status === 'APPROVED'" class="review-section">
               <el-button type="primary" @click="completeAdoption" :loading="submitting">
-                <el-icon><Check /></el-icon> 完成领养
+                <!-- <el-icon><Check /></el-icon>  -->
+                完成领养
               </el-button>
             </div>
             
             <!-- 返回按钮 -->
             <div class="back-button">
               <el-button @click="goBack">
-                <el-icon><ArrowLeft /></el-icon> 返回列表
+                <!-- <el-icon><ArrowLeft /></el-icon>  -->
+                返回列表
               </el-button>
             </div>
           </div>
@@ -194,7 +198,7 @@
     import { ref, computed, onMounted } from 'vue'
     import { useRouter, useRoute } from 'vue-router'
     import { ElMessage, ElMessageBox } from 'element-plus'
-    import { Check, Close, ArrowLeft } from '@element-plus/icons-vue'
+    //import { Check, Close, ArrowLeft } from '@element-plus/icons-vue'
     import { getAdoptionDetail, approveAdoption, rejectAdoption, completeAdoption as completeAdoptionApi } from '@/api/adoptionApi'
 
     const router = useRouter()

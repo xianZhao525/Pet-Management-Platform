@@ -139,13 +139,13 @@
             >
               <template #error>
                 <div class="image-placeholder">
-                  <el-icon><Picture /></el-icon>
+                  <!-- <el-icon><Picture /></el-icon> -->
                   <p>图片加载失败</p>
                 </div>
               </template>
             </el-image>
             <div v-else class="image-placeholder">
-              <el-icon><Picture /></el-icon>
+              <!-- <el-icon><Picture /></el-icon> -->
               <p>图片预览</p>
             </div>
           </div>
@@ -169,10 +169,12 @@
         <!-- 按钮区域 -->
         <div class="form-actions">
           <el-button @click="goBack">
-            <el-icon><ArrowLeft /></el-icon> 取消返回
+            <!-- <el-icon><ArrowLeft /></el-icon>  -->
+            取消返回
           </el-button>
           <el-button type="primary" native-type="submit" :loading="submitting">
-            <el-icon><Save /></el-icon> {{ isEdit ? '更新信息' : '添加宠物' }}
+            <!-- <el-icon><Save /></el-icon> -->
+             {{ isEdit ? '更新信息' : '添加宠物' }}
           </el-button>
         </div>
       </el-form>
@@ -184,7 +186,7 @@
     import { ref, reactive, computed, onMounted } from 'vue'
     import { useRouter, useRoute } from 'vue-router'
     import { ElMessage } from 'element-plus'
-    import { ArrowLeft, Save, Picture } from '@element-plus/icons-vue'
+    //import { ArrowLeft, Save, Picture } from '@element-plus/icons-vue'
     import { getPetDetail, addPet, updatePet } from '@/api/petApi'
 
     const router = useRouter()
