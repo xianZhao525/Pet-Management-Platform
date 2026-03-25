@@ -4,7 +4,7 @@
     <div class="pet-hero">
       <div class="container">
         <h1 class="display-4 fade-in-up">
-          <i class="fas fa-paw"></i> 领养宠物
+         🐶领养宠物
         </h1>
         <p class="lead">给流浪的毛孩子一个温暖的家，每一次领养都是拯救一个生命</p>
       </div>
@@ -279,9 +279,19 @@ onMounted(() => {
   .pet-hero {
     background: linear-gradient(135deg, #ec965dff 0%, #fd4b4bff 100%);
     color: white;
-    padding: 100px 0;
+    padding: 80px 0;
     text-align: center;
-    margin-bottom: 50px;
+  }
+
+  .pet-hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    font-weight: 700;
+  }
+
+  .pet-hero .lead {
+    font-size: 1.2rem;
+    opacity: 0.9;
   }
 
   .fade-in-up {

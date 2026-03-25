@@ -4,7 +4,7 @@
       <!-- Logo -->
       <a href="#" class="logo" @click.prevent="navigateTo('/')">
         <i class="fas fa-paw"></i> 
-        宠物领养平台
+        🐾宠物领养平台
       </a>
 
       <!-- 导航链接 -->
