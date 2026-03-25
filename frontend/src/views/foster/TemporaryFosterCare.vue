@@ -377,330 +377,469 @@
 </script>
 
 <style scoped>
-    .foster-hero {
+  /* 全局变量，与 JSP 保持一致 */
+  :root {
+    --primary-color: #4e97fd;
+    --secondary-color: #ff7e5f;
+    --dark-color: #343a40;
+    --text-light: #777;
+    --border-radius: 12px;
+    --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    --transition: all 0.3s ease;
+  }
+
+  /* Hero 区域 */
+  .foster-hero {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     padding: 80px 0;
     text-align: center;
-    }
+    margin-bottom: 50px;
+  }
 
-    .foster-hero h1 {
-    margin-bottom: 20px;
+  .foster-hero h1 {
     font-size: 3rem;
-    }
+    margin-bottom: 20px;
+    font-weight: 700;
+  }
 
-    .foster-hero .lead {
+  .foster-hero .lead {
     font-size: 1.2rem;
-    opacity: 0.95;
-    }
+    opacity: 0.9;
+    max-width: 700px;
+    margin: 0 auto;
+  }
 
-    .foster-card {
-    border-radius: 15px;
+  /* 服务卡片区域 */
+  .container.my-5 {
+    margin-top: 2rem !important;
+    margin-bottom: 2rem !important;
+  }
+
+  .foster-card {
+    border-radius: var(--border-radius);
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-    cursor: pointer;
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
     background: white;
-    }
+    height: 100%;
+    cursor: pointer;
+  }
 
-    .foster-card:hover {
+  .foster-card:hover {
     transform: translateY(-5px);
-    }
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+  }
 
-    .foster-card img {
+  .foster-card img {
     width: 100%;
     height: 200px;
     object-fit: cover;
-    }
+    transition: transform 0.5s ease;
+  }
 
-    .foster-card .card-body {
-    padding: 20px;
-    }
+  .foster-card:hover img {
+    transform: scale(1.05);
+  }
 
-    .foster-card h5 {
+  .foster-card .card-body {
+    padding: 25px;
+    text-align: center;
+  }
+
+  .foster-card h5 {
     font-size: 1.3rem;
     margin-bottom: 12px;
-    color: #333;
-    }
+    color: var(--dark-color);
+    font-weight: 600;
+  }
 
-    .foster-card p {
-    color: #666;
-    margin-bottom: 15px;
+  .foster-card p {
+    color: var(--text-light);
     line-height: 1.6;
-    }
+    margin-bottom: 20px;
+  }
 
-    .btn-outline-primary {
-    border: 2px solid #667eea;
-    color: #667eea;
+  .btn-outline-primary {
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
     background: transparent;
-    transition: all 0.3s ease;
-    }
+    transition: var(--transition);
+    padding: 8px 20px;
+    border-radius: 30px;
+    font-weight: 500;
+  }
 
-    .btn-outline-primary:hover {
-    background: #667eea;
+  .btn-outline-primary:hover {
+    background: var(--primary-color);
     color: white;
-    border-color: #667eea;
-    }
+    border-color: var(--primary-color);
+  }
 
-    /* 寄养流程 */
-    .process-section {
+  /* 寄养流程 */
+  .process-section {
     background: #f8f9fa;
     padding: 80px 0;
-    }
+  }
 
-    .section-title {
+  .section-title {
     text-align: center;
     font-size: 2.2rem;
     margin-bottom: 50px;
-    color: #333;
-    }
+    color: var(--dark-color);
+    position: relative;
+    font-weight: 700;
+  }
 
-    .process-steps {
+  .section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: var(--primary-color);
+    border-radius: 2px;
+  }
+
+  .process-steps {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 30px;
-    }
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
 
-    .step-item {
+  .step-item {
     text-align: center;
-    position: relative;
-    }
+    background: linear-gradient(145deg, #f8f7ff 0%, #f1efff 100%);
+    padding: 30px 20px;
+    border-radius: 24px;
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.08);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(102, 126, 234, 0.15);
+  }
 
-    .step-number {
-    width: 40px;
-    height: 40px;
-    background: #667eea;
+  .step-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 30px rgba(102, 126, 234, 0.15);
+    border-color: rgba(102, 126, 234, 0.3);
+    background: linear-gradient(145deg, #ffffff, #f5f3ff);
+  }
+
+  .step-number {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
     color: white;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-weight: bold;
-    margin: 0 auto 15px;
-    }
+    margin: 0 auto 18px;
+    box-shadow: 0 6px 12px rgba(102, 126, 234, 0.25);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
 
-    .step-icon {
-    font-size: 2rem;
+  .step-item:hover .step-number {
+    transform: scale(1.05);
+    box-shadow: 0 8px 18px rgba(102, 126, 234, 0.4);
+  }
+
+  .step-icon {
+    font-size: 2.4rem;
     color: #667eea;
     margin-bottom: 15px;
-    }
+    transition: transform 0.3s, color 0.3s;
+  }
 
-    .step-item h4 {
-    font-size: 1.2rem;
+  .step-item:hover .step-icon {
+    transform: translateY(-3px);
+    color: #764ba2;
+  }
+
+  .step-item h4 {
+    font-size: 1.25rem;
     margin-bottom: 10px;
-    color: #333;
-    }
+    color: #2d3748;
+    font-weight: 600;
+  }
 
-    .step-item p {
-    color: #666;
+  .step-item p {
+    color: #4a5568;
     font-size: 0.9rem;
     line-height: 1.5;
-    }
+  }
 
-    /* 寄养套餐 */
-    .packages-section {
-    padding: 80px 0;
-    }
-
-    .package-card {
-    background: white;
-    border-radius: 15px;
-    padding: 30px;
+  /* 寄养套餐卡片 */
+  .package-card {
+    background: #ffffff;
+    border-radius: 28px;
+    padding: 32px 24px;
     text-align: center;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-    transition: all 0.3s ease;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.05);
+    transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
     position: relative;
+    border: 1px solid #f0f0f0;
+    backdrop-filter: blur(0);
     height: 100%;
-    }
+  }
 
-    .package-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-    }
+  .package-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 25px 40px rgba(102, 126, 234, 0.15);
+    border-color: rgba(102, 126, 234, 0.3);
+  }
 
-    .package-card.popular {
+  /* 热门套餐 */
+  .package-card.popular {
     border: 2px solid #667eea;
-    transform: scale(1.05);
-    }
+    transform: scale(1.02);
+    background: linear-gradient(145deg, #ffffff, #faf9ff);
+    box-shadow: 0 20px 35px rgba(102, 126, 234, 0.2);
+  }
 
-    .package-card.popular:hover {
-    transform: scale(1.05) translateY(-5px);
-    }
+  .package-card.popular:hover {
+    transform: scale(1.02) translateY(-6px);
+  }
 
-    .popular-badge {
+  .popular-badge {
     position: absolute;
-    top: -12px;
-    right: 20px;
-    background: #667eea;
+    top: -14px;
+    right: 24px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
     color: white;
-    padding: 4px 12px;
-    border-radius: 20px;
+    padding: 6px 18px;
+    border-radius: 40px;
     font-size: 0.8rem;
     font-weight: 600;
-    }
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+    letter-spacing: 0.5px;
+  }
 
-    .package-card h3 {
-    font-size: 1.5rem;
-    margin-bottom: 15px;
-    color: #333;
-    }
+  .package-card h3 {
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+    color: #2d3748;
+    font-weight: 700;
+  }
 
-    .price {
-    margin-bottom: 20px;
-    }
+  .price {
+    margin-bottom: 24px;
+  }
 
-    .price-number {
-    font-size: 2.5rem;
-    font-weight: bold;
+  .price-number {
+    font-size: 2.8rem;
+    font-weight: 800;
     color: #667eea;
-    }
+    letter-spacing: -0.5px;
+  }
 
-    .price-unit {
+  .price-unit {
     font-size: 1rem;
-    color: #999;
-    }
+    color: #6c757d;
+    margin-left: 4px;
+  }
 
-    .package-features {
+  .package-features {
     list-style: none;
     padding: 0;
-    margin: 20px 0;
+    margin: 28px 0 32px;
     text-align: left;
-    }
+  }
 
-    .package-features li {
-    margin-bottom: 10px;
-    color: #666;
-    }
+  .package-features li {
+    margin-bottom: 12px;
+    color: #4a5568;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
 
-    .package-features li i {
-    margin-right: 8px;
-    }
+  .package-features i {
+    color: #667eea;
+    width: 20px;
+    font-size: 1rem;
+  }
 
-    /* 常见问题 */
-    .faq-section {
-    background: #f8f9fa;
+  .btn-primary {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border: none;
+    padding: 12px 20px;
+    border-radius: 40px;
+    color: white;
+    font-weight: 600;
+    transition: all 0.3s;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+    background: linear-gradient(135deg, #764ba2, #667eea);
+  }
+
+  /* 常见问题 */
+  .faq-section {
+    background: #f8f9ff;   /* 与 Hero 同色系的极浅背景 */
     padding: 80px 0;
-    }
+  }
 
-    .faq-list {
+  .faq-list {
     max-width: 800px;
     margin: 0 auto;
-    }
+    padding: 0 20px;
+  }
 
-    .faq-item {
-    background: white;
-    border-radius: 10px;
-    margin-bottom: 15px;
+  .faq-item {
+    background: #ffffff;
+    border-radius: 20px;
+    margin-bottom: 16px;
     overflow: hidden;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    }
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s;
+    border: 1px solid #f0f0f0;
+  }
 
-    .faq-question {
-    padding: 18px 20px;
+  .faq-item:hover {
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.1);
+    border-color: rgba(102, 126, 234, 0.2);
+  }
+
+  .faq-question {
+    padding: 20px 24px;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 12px;
-    transition: background 0.3s;
-    }
+    gap: 14px;
+    transition: background 0.2s;
+  }
 
-    .faq-question:hover {
-    background: #f5f5f5;
-    }
+  .faq-question:hover {
+    background: #faf9ff;
+  }
 
-    .faq-question i:first-child {
+  .faq-question i:first-child {
     color: #667eea;
     font-size: 1.2rem;
-    }
+    width: 24px;
+  }
 
-    .faq-question span {
+  .faq-question span {
     flex: 1;
-    font-weight: 500;
-    color: #333;
-    }
+    font-weight: 600;
+    color: #2d3748;
+    font-size: 1rem;
+  }
 
-    .faq-question i:last-child {
-    color: #999;
-    }
+  .faq-question i:last-child {
+    color: #9ca3af;
+    font-size: 0.9rem;
+    transition: transform 0.2s;
+  }
 
-    .faq-answer {
-    padding: 0 20px 20px 52px;
-    color: #666;
+  .faq-answer {
+    padding: 0 24px 24px 62px;
+    color: #4a5568;
     line-height: 1.6;
     border-top: 1px solid #f0f0f0;
-    }
+    background: #ffffff;
+    font-size: 0.95rem;
+  }
 
-    /* 弹窗样式 */
-    .success-content {
+  /* 弹窗样式 */
+  .success-content {
     text-align: center;
     padding: 20px;
-    }
+  }
 
-    .success-icon {
+  .success-icon {
     font-size: 60px;
     color: #67c23a;
     margin-bottom: 20px;
-    }
+  }
 
-    .success-content h3 {
+  .success-content h3 {
     margin-bottom: 10px;
-    color: #333;
-    }
+    color: var(--dark-color);
+  }
 
-    .success-content p {
-    color: #666;
+  .success-content p {
+    color: var(--text-light);
     margin-bottom: 8px;
-    }
+  }
 
-    .success-content .small-text {
+  .small-text {
     font-size: 12px;
     color: #999;
     margin-top: 15px;
-    }
+  }
 
-    /* 响应式 */
-    @media (max-width: 992px) {
+  /* 响应式 */
+  @media (max-width: 992px) {
     .process-steps {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 40px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
     }
-    
     .package-card.popular {
-        transform: scale(1);
+      transform: scale(1);
     }
-    
     .package-card.popular:hover {
-        transform: translateY(-5px);
+      transform: translateY(-5px);
     }
-    }
+  }
 
-    @media (max-width: 768px) {
+  @media (max-width: 768px) {
     .foster-hero {
-        padding: 50px 0;
+      padding: 50px 0;
     }
-    
     .foster-hero h1 {
-        font-size: 2rem;
+      font-size: 2rem;
     }
-    
     .process-steps {
-        grid-template-columns: 1fr;
-        gap: 30px;
+      grid-template-columns: 1fr;
+      gap: 20px;
     }
-    
     .section-title {
-        font-size: 1.8rem;
+      font-size: 1.8rem;
     }
-    
     .faq-question {
-        padding: 15px;
-        font-size: 0.9rem;
+      padding: 15px;
+      font-size: 0.9rem;
     }
-    
     .faq-answer {
-        padding: 0 15px 15px 45px;
-        font-size: 0.9rem;
+      padding: 0 15px 15px 45px;
     }
+  }
+
+  /* 确保服务卡片三栏并排 */
+  .foster-page .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -15px;  /* 抵消列的内边距 */
+  }
+
+  .foster-page .col-md-4 {
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+    padding: 0 15px;
+    box-sizing: border-box;
+  }
+
+  /* 小屏幕时改为单栏 */
+  @media (max-width: 768px) {
+    .foster-page .col-md-4 {
+      flex: 0 0 100%;
+      max-width: 100%;
+      margin-bottom: 20px;
     }
+  }
 </style>
