@@ -92,9 +92,9 @@
     // 导航菜单配置
     const navItems = ref([
     { name: '首页', path: '/' },
-    { name: '领养宠物', path: '/pet/list' },
-    { name: '临时寄养', path: '/foster/list' },
-    { name: '爱心捐赠', path: '/donation/list' }
+    { name: '领养宠物', path: '/adoption/petAdoption' },
+    { name: '临时寄养', path: '/foster/temporaryFosterCare' },
+    { name: '爱心捐赠', path: '/donation/charityDonation' }
     ])
 
     // 计算属性

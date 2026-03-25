@@ -2,6 +2,7 @@ package com.example.backend.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -21,14 +22,12 @@ public class SecurityConfig {
                 return new BCryptPasswordEncoder();
         }
 
-        // Spring Boot 3.x 获取 AuthenticationManager 的正确方式
         @Bean
         public AuthenticationManager authenticationManager(
                         AuthenticationConfiguration authenticationConfiguration) throws Exception {
                 return authenticationConfiguration.getAuthenticationManager();
         }
 
-        // 配置认证提供者
         @Bean
         public DaoAuthenticationProvider authenticationProvider(
                         PasswordEncoder passwordEncoder,
@@ -44,6 +43,8 @@ public class SecurityConfig {
                 http
                                 .csrf(csrf -> csrf.disable())
                                 .authorizeHttpRequests(auth -> auth
+                                                // 放行所有 OPTIONS 请求（解决跨域预检）
+                                                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                                                 // 静态资源放行
                                                 .requestMatchers("/static/**", "/resources/**", "/public/**",
                                                                 "/webjars/**")
@@ -51,8 +52,8 @@ public class SecurityConfig {
                                                 .requestMatchers("/css/**", "/js/**", "/images/**", "/fonts/**")
                                                 .permitAll()
                                                 .requestMatchers("/favicon.ico").permitAll()
-                                                // ✅ 添加根路径放行
-                                                .requestMatchers("/", "/index").permitAll() // <-- 添加这一行
+                                                // 根路径放行
+                                                .requestMatchers("/", "/index").permitAll()
                                                 // 公共页面放行
                                                 .requestMatchers("/pet/**", "/foster/**", "/donation/**",
                                                                 "/adoption/**")

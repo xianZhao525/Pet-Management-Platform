@@ -13,26 +13,16 @@
         class="header-menu"
       >
         <el-menu-item index="/">
-          <el-icon><House /></el-icon>
           <span>首页</span>
         </el-menu-item>
-        <el-menu-item index="/pet/list">
-          <!-- <el-icon><Paw /></el-icon> -->
+        <el-menu-item index="/adoption/petAdoption">
           <span>宠物列表</span>
         </el-menu-item>
-
-        <el-menu-item index="/adoption/process">
-          <!-- <el-icon><HeartFilled /></el-icon> -->
-          <span>领养流程</span>
+        <el-menu-item index="/foster/temporaryFosterCare">
+          <span>宠物寄养</span>
         </el-menu-item>
-
-        <el-menu-item index="/donation">
-          <!-- <el-icon><HandHoldingHeart /></el-icon> -->
+        <el-menu-item index="/donation/charityDonation">
           <span>捐赠支持</span>
-        </el-menu-item>
-        <el-menu-item index="/about">
-          <!-- <el-icon><Info /></el-icon> -->
-          <span>关于我们</span>
         </el-menu-item>
       </el-menu>
       
