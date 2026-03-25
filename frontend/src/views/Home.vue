@@ -286,68 +286,218 @@
     color: #667eea;
   }
 
-  /* 服务区域 */
+  /* 服务区域整体背景 */
   .services-section {
     padding: 80px 0;
-    background-color: #f8f9fa;
+    background: linear-gradient(145deg, #fafbff 0%, #f5f3ff 100%);
+    position: relative;
+    overflow: hidden;
   }
 
+  /* 装饰性背景光晕 */
+  .services-section::before {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+    top: -100px;
+    right: -100px;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .services-section::after {
+    content: '';
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(118, 75, 162, 0.08) 0%, transparent 70%);
+    bottom: -150px;
+    left: -150px;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  /* 标题样式升级 */
   .section-title {
     text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 50px;
-    color: #333;
+    font-size: 2.8rem;
+    margin-bottom: 20px;
+    color: #1e1e2f;
+    position: relative;
+    font-weight: 700;
   }
 
+  .section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    border-radius: 4px;
+  }
+
+  /* 服务网格 */
   .services-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
+    gap: 40px;
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+    position: relative;
+    z-index: 2;
   }
 
+  /* 卡片玻璃态设计 */
   .service-card {
-    background: white;
-    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 28px;
     padding: 40px 30px;
     text-align: center;
-    transition: all 0.3s ease;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    position: relative;
+    overflow: hidden;
   }
 
+  /* 卡片悬停效果 */
   .service-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    transform: translateY(-12px);
+    box-shadow: 0 25px 40px rgba(102, 126, 234, 0.2);
+    background: rgba(255, 255, 255, 0.9);
+    border-color: rgba(102, 126, 234, 0.3);
   }
 
-  .service-icon {
+  /* 卡片装饰光晕（悬停时出现） */
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 80px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    /* border-radius: 50%; */
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(102, 126, 234, 0.05), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s;
+    pointer-events: none;
+  }
+
+  .service-card:hover::before {
+    transform: translateX(100%);
+  }
+
+  /* 图标区域 */
+  .service-icon {
+    width: 90px;
+    height: 90px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 20px;
+    margin: 0 auto 25px;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+  }
+
+  .service-card:hover .service-icon {
+    transform: scale(1.05);
+    box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
   }
 
   .service-icon i {
-    font-size: 36px;
+    font-size: 40px;
     color: white;
+    transition: transform 0.3s;
   }
 
+  .service-card:hover .service-icon i {
+    transform: scale(1.1);
+  }
+
+  /* 卡片文字 */
   .service-card h3 {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     margin-bottom: 15px;
-    color: #333;
+    color: #1e1e2f;
+    font-weight: 600;
   }
 
   .service-card p {
-    color: #666;
+    color: #5a5a6e;
     line-height: 1.6;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+    font-size: 0.95rem;
+  }
+
+  /* 了解更多链接 */
+  .view-details {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 8px 20px;
+    border-radius: 40px;
+    background: rgba(102, 126, 234, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .view-details:hover {
+    background: #667eea;
+    color: white;
+    gap: 12px;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  }
+
+  .view-details i {
+    transition: transform 0.2s;
+  }
+
+  .view-details:hover i {
+    transform: translateX(4px);
+  }
+
+  /* 响应式适配 */
+  @media (max-width: 992px) {
+    .services-grid {
+      gap: 30px;
+    }
+    .service-card {
+      padding: 30px 20px;
+    }
+    .service-icon {
+      width: 80px;
+      height: 80px;
+    }
+    .service-icon i {
+      font-size: 34px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .section-title {
+      font-size: 2rem;
+    }
+    .service-card {
+      padding: 25px 20px;
+    }
+    .service-icon {
+      width: 70px;
+      height: 70px;
+    }
+    .service-icon i {
+      font-size: 30px;
+    }
   }
 
   .view-details {
