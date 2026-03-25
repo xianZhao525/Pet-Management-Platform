@@ -34,7 +34,7 @@
             
             <div class="pet-info-item">
               <span class="pet-info-label"><i class="fas fa-paw"></i> 品种：</span>
-              <span class="pet-info-value">{{ pet.breed }}</span>
+              <span class="pet-info-value">{{ pet.breed || '未知品种' }}</span>
             </div>
             
             <div class="pet-info-item">
@@ -108,7 +108,7 @@
                 <i class="fas fa-check"></i> 已申请
               </button>
               
-              <router-link to="/pet/list" class="btn btn-outline-primary back-button">
+              <router-link to="/adoption/petAdoption" class="btn btn-outline-primary back-button">
                 <i class="fas fa-arrow-left"></i> 返回宠物列表
               </router-link>
             </div>
@@ -116,7 +116,7 @@
             <!-- 未登录提示 -->
             <div v-if="!isLoggedIn && pet.status === 'AVAILABLE'" class="alert alert-warning mt-3">
               <i class="fas fa-info-circle"></i> 请先 
-              <router-link :to="`/login?redirect=/pet/detail/${petId}`">登录</router-link> 
+              <router-link :to="`/login?redirect=/adoption/petAdoptionDetails/${petId}`">登录</router-link> 
               后再申请领养
             </div>
             
@@ -131,8 +131,8 @@
         </div>
       </div>
       
-      <!-- 相关宠物推荐 -->
-      <div class="row mt-5">
+      <!-- 相关宠物推荐（暂时隐藏，待后端接口完善后启用） -->
+      <div class="row mt-5" v-if="relatedPets.length">
         <div class="col-12">
           <h3 class="section-title">您可能还喜欢</h3>
           <div class="row">
@@ -157,153 +157,166 @@
 </template>
 
 <script setup>
-    import { ref, computed, onMounted } from 'vue'
-    import { useRoute, useRouter } from 'vue-router'
-    import { ElMessage } from 'element-plus'
-    import { useUserStore } from '@/stores/user'
-    import { getPetDetail, applyAdoption, getRelatedPets } from '@/api/petApi'
+import { ref, computed, onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { ElMessage } from 'element-plus'
+import { useUserStore } from '@/stores/userStore'
+import { getPetDetail } from '@/api/petApi'
+import { applyAdoption } from '@/api/adoptionApi'
+import { getRelatedPets } from '@/api/petApi'
 
-    const route = useRoute()
-    const router = useRouter()
-    const userStore = useUserStore()
+const route = useRoute()
+const router = useRouter()
+const userStore = useUserStore()
 
-    const petId = computed(() => route.params.id)
-    const loading = ref(false)
-    const hasApplied = ref(false)
+const petId = computed(() => route.params.id)
+const loading = ref(false)
+const hasApplied = ref(false)
 
-    // 宠物数据
-    const pet = ref({
-    id: null,
-    name: '',
-    breed: '',
-    age: 0,
-    gender: 'MALE',
-    status: 'AVAILABLE',
-    description: '',
-    healthStatus: '健康',
-    vaccinated: true,
-    dewormed: true,
-    image: '/images/pets/default.jpg'
-    })
+// 宠物数据
+const pet = ref({
+  id: null,
+  name: '',
+  breed: '',
+  age: 0,
+  gender: 'MALE',
+  status: 'AVAILABLE',
+  description: '',
+  healthStatus: '健康',
+  vaccinated: true,
+  dewormed: true,
+  image: '/images/pets/default.jpg'
+})
 
-    // 图片列表
-    const petImages = ref([])
-    const currentImage = ref('')
+// 图片列表
+const petImages = ref([])
+const currentImage = ref('')
 
-    // 相关宠物
-    const relatedPets = ref([])
+// 相关宠物
+const relatedPets = ref([])
 
-    // 计算属性
-    const isLoggedIn = computed(() => userStore.isLoggedIn)
-    const statusClass = computed(() => {
-    return pet.value.status === 'AVAILABLE' ? 'status-available' : 'status-adopted'
-    })
+// 计算属性
+const isLoggedIn = computed(() => {
+  try {
+    return userStore && userStore.isLoggedIn
+  } catch {
+    return false
+  }
+})
 
-    const genderIcon = computed(() => {
-    return pet.value.gender === 'MALE' ? 'fas fa-mars' : 'fas fa-venus'
-    })
+const statusClass = computed(() => {
+  return pet.value.status === 'AVAILABLE' ? 'status-available' : 'status-adopted'
+})
 
-    const careTips = computed(() => {
-    const breed = pet.value.breed
-    if (breed.includes('狗')) {
-        return [
-        '每天需要至少1-2小时运动',
-        '需要定期梳毛和洗澡',
-        '需要基本服从训练'
-        ]
-    } else if (breed.includes('猫')) {
-        return [
-        '需要猫砂盆和定期清理',
-        '需要猫抓板防止抓家具',
-        '定期梳毛和指甲修剪'
-        ]
-    } else if (breed.includes('兔')) {
-        return [
-        '需要干草和新鲜蔬菜',
-        '定期修剪指甲',
-        '需要足够的活动空间'
-        ]
+const genderIcon = computed(() => {
+  return pet.value.gender === 'MALE' ? 'fas fa-mars' : 'fas fa-venus'
+})
+
+const careTips = computed(() => {
+  const breed = pet.value.breed
+  if (breed && breed.includes('狗')) {
+    return ['每天需要至少1-2小时运动', '需要定期梳毛和洗澡', '需要基本服从训练']
+  } else if (breed && breed.includes('猫')) {
+    return ['需要猫砂盆和定期清理', '需要猫抓板防止抓家具', '定期梳毛和指甲修剪']
+  } else if (breed && breed.includes('兔')) {
+    return ['需要干草和新鲜蔬菜', '定期修剪指甲', '需要足够的活动空间']
+  } else {
+    return ['需要专门的饲养环境', '需要定期清洁笼舍', '需要专业宠物食品']
+  }
+})
+
+// 申请领养
+// 申请领养
+const handleApply = async () => {
+  if (!isLoggedIn.value) {
+    ElMessage.warning('请先登录')
+    router.push(`/login?redirect=/adoption/petAdoptionDetails/${petId.value}`)
+    return
+  }
+
+  loading.value = true
+  try {
+    // 调用领养申请接口（根据您的 API 格式可能需要调整参数）
+    const response = await applyAdoption({ petId: petId.value })
+    if (response.code === 200) {
+      hasApplied.value = true
+      ElMessage.success('申请成功，请耐心等待审核')
     } else {
-        return [
-        '需要专门的饲养环境',
-        '需要定期清洁笼舍',
-        '需要专业宠物食品'
-        ]
+      ElMessage.error(response.message || '申请失败')
     }
-    })
+  } catch (error) {
+    console.error('申请失败', error)
+    ElMessage.error('申请失败，请稍后重试')
+  } finally {
+    loading.value = false
+  }
+}
 
-    // 申请领养
-    const handleApply = async () => {
-    loading.value = true
-    try {
-        const response = await applyAdoption(petId.value)
-        if (response.code === 200) {
-        hasApplied.value = true
-        ElMessage.success('申请成功，请耐心等待审核')
-        } else {
-        ElMessage.error(response.message || '申请失败')
-        }
-    } catch (error) {
-        ElMessage.error('申请失败，请稍后重试')
-    } finally {
-        loading.value = false
-    }
-    }
+// 跳转登录
+const goToLogin = () => {
+  router.push(`/login?redirect=/adoption/petAdoptionDetails/${petId.value}`)
+}
 
-    // 跳转登录
-    const goToLogin = () => {
-    router.push(`/login?redirect=/pet/detail/${petId.value}`)
-    }
+// 跳转宠物详情
+const goToPetDetail = (id) => {
+  router.push(`/adoption/petAdoptionDetails/${id}`)
+}
 
-    // 跳转宠物详情
-    const goToPetDetail = (id) => {
-    router.push(`/pet/detail/${id}`)
-    }
+// 生成图片列表（暂时只用单张图）
+const generateImageList = () => {
+  const baseImage = pet.value.image
+  petImages.value = [baseImage]
+  // 如果有更多图片，可以扩展
+  // 例如：baseImage.replace('.jpg', '_2.jpg') 等
+}
 
-    // 生成图片列表
-    const generateImageList = () => {
-    const baseImage = pet.value.image
-    petImages.value = [
-        baseImage,
-        baseImage.replace('.jpg', '_2.jpg'),
-        baseImage.replace('.jpg', '_3.jpg')
-    ].filter(img => img !== baseImage)
-    petImages.value.unshift(baseImage)
-    }
+// 加载宠物详情
+const loadPetDetail = async () => {
+  // 1. 尝试从路由 state 获取宠物数据
+  const statePet = history.state?.pet
+  if (statePet && statePet.id === petId.value) {
+    pet.value = statePet
+    currentImage.value = pet.value.image
+    generateImageList()
+    // 如果 state 中没有 hasApplied 状态，可以请求 API 查询
+    // 这里简化，暂时不查询
+    return
+  }
 
-    // 加载宠物详情
-    const loadPetDetail = async () => {
-    try {
-        const response = await getPetDetail(petId.value)
-        if (response.code === 200) {
-        pet.value = response.data
-        currentImage.value = pet.value.image
-        generateImageList()
-        hasApplied.value = response.data.hasApplied || false
-        } else {
-        ElMessage.error('获取宠物信息失败')
-        }
-    } catch (error) {
-        ElMessage.error('加载失败')
+  // 2. 没有 state 数据，调用 API
+  try {
+    const response = await getPetDetail(petId.value)
+    if (response.code === 200) {
+      pet.value = response.data
+      currentImage.value = pet.value.image
+      generateImageList()
+      hasApplied.value = response.data.hasApplied || false
+    } else {
+      ElMessage.error(response.message || '获取宠物信息失败')
     }
-    }
+  } catch (error) {
+    console.error('API 请求失败', error)
+    ElMessage.error('加载宠物信息失败，请稍后重试')
+  }
+}
 
-    // 加载相关宠物
-    const loadRelatedPets = async () => {
-    try {
-        const response = await getRelatedPets(petId.value)
-        if (response.code === 200) {
-        relatedPets.value = response.data
-        }
-    } catch (error) {
-        console.error('加载相关宠物失败', error)
-    }
-    }
+// 加载相关宠物（可选，暂时屏蔽）
+const loadRelatedPets = async () => {
+  // 如果后端有接口再启用
+  // try {
+  //   const response = await getRelatedPets(petId.value)
+  //   if (response.code === 200) {
+  //     relatedPets.value = response.data || []
+  //   }
+  // } catch (error) {
+  //   console.error('加载相关宠物失败', error)
+  // }
+}
 
-    onMounted(() => {
-    loadPetDetail()
-    loadRelatedPets()
-    })
+onMounted(() => {
+  loadPetDetail()
+  loadRelatedPets()
+})
 </script>
 
 <style scoped>
