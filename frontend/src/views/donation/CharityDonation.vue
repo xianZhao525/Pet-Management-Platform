@@ -320,24 +320,26 @@
 </script>
 
 <style scoped>
-    .donation-hero {
+  /* Hero 区域（保持不变） */
+  .donation-hero {
     background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
     color: white;
     padding: 80px 0;
     text-align: center;
-    }
+  }
 
-    .donation-hero h1 {
+  .donation-hero h1 {
     margin-bottom: 20px;
     font-size: 3rem;
-    }
+  }
 
-    .donation-hero .lead {
+  .donation-hero .lead {
     font-size: 1.2rem;
     opacity: 0.95;
-    }
+  }
 
-    .donation-stats {
+  /* 统计卡片（保持不变） */
+  .donation-stats {
     background: white;
     border-radius: 15px;
     padding: 30px;
@@ -346,148 +348,189 @@
     max-width: 800px;
     position: relative;
     z-index: 10;
-    }
+  }
 
-    .stats-grid {
+  .stats-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
-    }
+  }
 
-    .stat-item {
+  .stat-item {
     text-align: center;
     padding: 20px;
-    }
+  }
 
-    .stat-number {
+  .stat-number {
     font-size: 2.5rem;
     font-weight: bold;
-    color: var(--primary-color, #4e97fd);
+    color: #f5576c;
     margin-bottom: 8px;
-    }
+  }
 
-    .stat-item div:last-child {
+  .stat-item div:last-child {
     color: #666;
     font-size: 0.95rem;
-    }
+  }
 
-    .donation-card {
+  /* ========== 捐赠卡片两栏布局（优化） ========== */
+  .container.my-5 .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -15px; /* 抵消列内边距 */
+  }
+
+  .container.my-5 .col-md-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+    padding: 0 15px;
+    box-sizing: border-box;
+  }
+
+  .donation-card {
     border: none;
-    border-radius: 15px;
+    border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    background: white;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
-    }
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
 
-    .donation-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-    }
+  .donation-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 35px rgba(0, 0, 0, 0.12);
+  }
 
-    .donation-card .card-img-top {
-    height: 200px;
+  .donation-card .card-img-top {
+    height: 220px;
     object-fit: cover;
-    }
+    width: 100%;
+    transition: transform 0.5s ease;
+  }
 
-    .donation-card .card-body {
-    padding: 25px;
+  .donation-card:hover .card-img-top {
+    transform: scale(1.03);
+  }
+
+  .donation-card .card-body {
+    padding: 25px 20px 30px;
     text-align: center;
-    }
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
 
-    .donation-card .card-title {
-    font-size: 1.5rem;
-    margin-bottom: 15px;
+  .donation-card .card-title {
+    font-size: 1.6rem;
+    margin-bottom: 12px;
     color: #333;
-    }
+    font-weight: 600;
+  }
 
-    .donation-card .card-text {
+  .donation-card .card-text {
     color: #666;
-    margin-bottom: 20px;
-    }
+    margin-bottom: 25px;
+    line-height: 1.5;
+    flex: 1;
+  }
 
-    .btn-primary {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  /* 按钮样式与 Hero 渐变色一致 */
+  .btn-primary {
+    background: linear-gradient(135deg, #f093fb, #f5576c);
     border: none;
-    padding: 10px 30px;
-    border-radius: 25px;
+    padding: 10px 25px;
+    border-radius: 40px;
+    font-weight: 500;
+    color: white;
     transition: all 0.3s ease;
-    }
+    align-self: center;
+    width: auto;
+    min-width: 140px;
+  }
 
-    .btn-primary:hover {
+  .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(245, 87, 108, 0.4);
-    }
+    box-shadow: 0 8px 18px rgba(245, 87, 108, 0.35);
+    background: linear-gradient(135deg, #f5576c, #f093fb);
+  }
 
-    .amount-buttons {
+  /* 弹窗样式（保持不变） */
+  .amount-buttons {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
     align-items: center;
-    }
+  }
 
-    .amount-buttons .el-button {
+  .amount-buttons .el-button {
     margin: 0;
-    }
+  }
 
-    .success-content {
+  .success-content {
     text-align: center;
     padding: 20px;
-    }
+  }
 
-    .success-icon {
+  .success-icon {
     font-size: 60px;
     color: #67c23a;
     margin-bottom: 20px;
-    }
+  }
 
-    .success-content h3 {
+  .success-content h3 {
     margin-bottom: 10px;
     color: #333;
-    }
+  }
 
-    .success-content p {
+  .success-content p {
     color: #666;
     margin-bottom: 8px;
-    }
+  }
 
-    .success-content .small-text {
+  .success-content .small-text {
     font-size: 12px;
     color: #999;
     margin-top: 15px;
-    }
+  }
 
-    @media (max-width: 768px) {
+  /* 响应式：小屏幕堆叠 */
+  @media (max-width: 768px) {
     .donation-hero {
-        padding: 50px 0;
+      padding: 50px 0;
     }
-    
     .donation-hero h1 {
-        font-size: 2rem;
+      font-size: 2rem;
     }
-    
     .stats-grid {
-        grid-template-columns: 1fr;
-        gap: 0;
+      grid-template-columns: 1fr;
+      gap: 0;
     }
-    
     .stat-item {
-        border-bottom: 1px solid #eee;
+      border-bottom: 1px solid #eee;
     }
-    
     .stat-item:last-child {
-        border-bottom: none;
+      border-bottom: none;
     }
-    
     .stat-number {
-        font-size: 1.8rem;
+      font-size: 1.8rem;
     }
-    
-    .amount-buttons {
-        justify-content: center;
+    .container.my-5 .col-md-6 {
+      flex: 0 0 100%;
+      max-width: 100%;
+      margin-bottom: 30px;
     }
-    
-    .donation-card {
-        margin-bottom: 20px;
+    .donation-card .card-img-top {
+      height: 180px;
     }
+    .donation-card .card-title {
+      font-size: 1.4rem;
     }
+    .btn-primary {
+      padding: 8px 20px;
+      font-size: 0.9rem;
+    }
+  }
 </style>
