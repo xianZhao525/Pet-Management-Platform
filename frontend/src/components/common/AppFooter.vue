@@ -34,10 +34,10 @@
               <i class="fas fa-heart me-2" style="color: #ff6b6b;"></i> 
               每一个毛孩子都想要一个可以遮风挡雨的家
             </p>
-            <p class="text-muted">
+            <!-- <p class="text-muted">
               <i class="fas fa-envelope me-2"></i> 
               contact@petadoption.com
-            </p>
+            </p> -->
             <p class="text-muted">
               <i class="fas fa-map-marker-alt me-2"></i> 
               用领养代替购买，用爱心代替抛弃
@@ -51,10 +51,11 @@
       <div class="text-center text-muted">
         <p>
           &copy; {{ currentYear }} 宠物领养平台. 版权所有.
-          <span class="mx-2">|</span>
+          <!-- 暂时不使用 -->
+          <!-- <span class="mx-2">|</span>
           <a href="#" class="text-muted" @click.prevent="goToPrivacy">隐私政策</a>
           <span class="mx-2">|</span>
-          <a href="#" class="text-muted" @click.prevent="goToTerms">使用条款</a>
+          <a href="#" class="text-muted" @click.prevent="goToTerms">使用条款</a> -->
         </p>
         <p class="small">
           <i class="fas fa-shield-alt me-1"></i> 
@@ -79,7 +80,7 @@
     { name: '首页', path: '/' },
     { name: '领养宠物', path: '/pet/list' },
     { name: '关于我们', path: '/about' },
-    { name: '联系我们', path: '/contact' }
+    //{ name: '联系我们', path: '/contact' }
     ])
 
     // 导航方法
@@ -120,41 +121,132 @@
       margin-top: 60px;
     }
 
-    /* 新增：让三栏容器水平居中且均匀分布 */
+    /* 三栏容器：使用 flex 使每栏自动等高 */
     .footer .row {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
       max-width: 1200px;
       margin: 0 auto;
+      gap: 30px;           /* 栏间间距，避免内容挤在一起 */
     }
 
     .footer .col-md-4 {
       flex: 1;
-      min-width: 250px;
-      padding: 0 15px;
-      text-align: center;  /* 内容居中，可根据喜好改为 left */
+      min-width: 220px;    /* 手机折行时最小宽度 */
+      display: flex;
+      flex-direction: column;
+      text-align: center;    /* 推荐左对齐，更符合阅读习惯，可根据喜好改为 center */
     }
 
-    /* 响应式 */
+    /* 标题统一风格 */
+    .footer h5 {
+      color: #fff;
+      margin-bottom: 20px;
+      font-size: 18px;
+      font-weight: 600;
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    /* 标题下划线装饰（可选） */
+    .footer h5::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: #ff6b6b;
+      border-radius: 2px;
+    }
+
+    /* 快速链接列表样式 */
+    .footer ul {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px 20px;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer ul li {
+      margin-bottom: 0; /* 取消原有 margin-bottom，由 grid gap 控制间距 */
+    }
+
+    .footer ul li a {
+      color: #bdc3c7;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .footer ul li a:hover {
+      color: #fff;
+      transform: translateX(5px);
+    }
+
+    /* 联系方式段落样式 */
+    .contact-info p {
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .contact-info i {
+      width: 24px;
+      color: #ff6b6b;
+      text-align: center;
+      font-size: 16px;
+    }
+    
+    /* 底部版权区域 */
+    .footer hr {
+      background-color: #34495e;
+      margin: 10px 0 5px;
+      border: none;
+      height: 1px;
+    }
+
+    .footer .text-center {
+      text-align: center;
+      font-size: 14px;
+      color: #bdc3c7;
+    }
+
+    .footer .text-center a {
+      color: #bdc3c7;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer .text-center a:hover {
+      color: #fff;
+    }
+
+    /* 小屏幕适配：三栏堆叠 */
     @media (max-width: 768px) {
       .footer .row {
         flex-direction: column;
         align-items: center;
+        gap: 40px;
       }
       .footer .col-md-4 {
         text-align: center;
-        margin-bottom: 30px;
         width: 100%;
+        align-items: center;
       }
-    .footer ul li a:hover {
-        transform: translateX(0);
-    }
-    
-    .contact-info i {
-        width: auto;
-        margin-right: 8px;
-        }
+      /* 标题下划线居中 */
+      .footer h5::after {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .contact-info p {
+        justify-content: center;
+      }
     }
 
     /* 添加一个可爱的小爪印动画效果 */
