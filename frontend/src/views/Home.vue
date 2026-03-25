@@ -6,12 +6,10 @@
         <h1>给流浪宠物一个温暖的家</h1>
         <p>我们连接爱心人士与需要帮助的宠物，让领养变得简单、可靠。每一只宠物都值得被爱，每一次领养都是拯救一个生命。</p>
         <div style="margin-top: 40px;">
-          <el-button type="primary" size="large" @click="navigateTo('/pet/list')" class="hero-btn">
-            <!-- <el-icon><Search /></el-icon>  -->
+          <el-button type="primary" size="large" @click="navigateTo('/adoption/petAdoption')" class="hero-btn">
             浏览待领养宠物
           </el-button>
-          <el-button size="large" @click="navigateTo('/donate')" class="hero-btn-secondary">
-            <!-- <el-icon><HeartFilled /></el-icon>  -->
+          <el-button size="large" @click="navigateTo('/donation/charityDonation')" class="hero-btn-secondary">
             爱心捐赠
           </el-button>
         </div>
@@ -79,8 +77,7 @@
         </div>
         
         <div class="view-more">
-          <el-button type="primary" @click="navigateTo('/pet/list')">
-            <!-- <el-icon><Paw /></el-icon>  -->
+          <el-button type="primary" @click="navigateTo('/adoption/petAdoption')">
             查看待领养宠物
           </el-button>
         </div>
@@ -102,19 +99,19 @@
       title: '宠物领养',
       description: '为流浪动物寻找永久的家，提供完整的领养流程支持。',
       icon: 'fas fa-home',
-      link: '/pet/list'
+      link: '/adoption/petAdoption'
     },
     {
       title: '临时寄养',
       description: '为宠物主人提供可靠的临时寄养服务。',
       icon: 'fas fa-hands-helping',
-      link: '/foster'
+      link: '/foster/temporaryFosterCare'
     },
     {
       title: '爱心捐赠',
       description: '支持我们的救助工作，帮助更多小生命。',
       icon: 'fas fa-donate',
-      link: '/donate'
+      link: '/donation/charityDonation'
     }
   ]
 

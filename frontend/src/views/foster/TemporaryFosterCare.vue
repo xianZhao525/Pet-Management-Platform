@@ -173,7 +173,7 @@
     import { ref, reactive } from 'vue'
     import { useRouter } from 'vue-router'
     import { ElMessage } from 'element-plus'
-    import { submitFosterBooking } from '@/api/fosterApi'
+    import { createFoster } from '@/api/fosterApi'
 
     const router = useRouter()
 
@@ -351,10 +351,14 @@
         
         submitting.value = true
         try {
-        const response = await submitFosterBooking({
-            ...bookingForm,
-            startDate: bookingForm.dateRange[0],
-            endDate: bookingForm.dateRange[1]
+        const response = await createFoster({
+          petName: bookingForm.petName,
+          petType: bookingForm.petType,
+          startDate: bookingForm.dateRange[0],
+          endDate: bookingForm.dateRange[1],
+          dailyFee: selectedPackage.value?.price, // 套餐价格
+          description: bookingForm.specialRequests,
+          // 其他必要字段根据后端要求补充
         })
         
         if (response.code === 200) {

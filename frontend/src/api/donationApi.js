@@ -39,3 +39,15 @@ export const itemsDonation = (id, data) => {
 export const volunteerDonation = (id, data) => {
     return request.post(`/donation/volunteer/${id}`, data)
 }
+
+// 通用捐赠提交（根据类型分发）
+export const submitDonation = (data) => {
+    if (data.type === 'money') {
+        return moneyDonation(data.donationId, data);
+    } else if (data.type === 'items') {
+        return itemsDonation(data.donationId, data);
+    } else if (data.type === 'volunteer') {
+        return volunteerDonation(data.donationId, data);
+    }
+    return Promise.reject(new Error('Invalid donation type'));
+};

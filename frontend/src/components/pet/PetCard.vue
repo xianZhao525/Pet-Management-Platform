@@ -38,7 +38,7 @@
           <span>{{ pet.vaccinated ? '已接种疫苗' : '未接种疫苗' }}</span>
         </div>
       </div>
-      <router-link :to="`/pet/detail/${pet.id}`" class="btn btn-primary w-100">
+      <router-link :to="`/adoption/petAdoptionDetails/${pet.id}`" class="btn btn-primary w-100">
         <i class="fas fa-info-circle"></i> 查看详情
       </router-link>
     </div>
