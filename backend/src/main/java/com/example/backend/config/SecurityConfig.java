@@ -65,8 +65,9 @@ public class SecurityConfig {
                                                 .requestMatchers("/test").permitAll()
                                                 // 管理员路径 - 需要ROLE_ADMIN角色
                                                 .requestMatchers("/admin/**").hasRole("ADMIN")
-                                                // 其他请求需要认证
-                                                .anyRequest().authenticated())
+                                                // 开发阶段：其他所有请求都放行（调试完成后可改回 .authenticated()）
+                                                .requestMatchers("/api/**").permitAll()
+                                                .anyRequest().permitAll())
                                 .logout(logout -> logout
                                                 .logoutUrl("/user/logout")
                                                 .logoutSuccessUrl("/user/login?logout=true")

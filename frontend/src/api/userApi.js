@@ -7,7 +7,7 @@ export const login = (data) => {
 
 // 用户注册
 export const register = (data) => {
-    return request.post('/user/register', data)
+    return request.post('/api/user/register', data)
 }
 
 // 用户登出
