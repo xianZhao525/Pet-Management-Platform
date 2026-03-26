@@ -31,14 +31,14 @@ const router = createRouter({
           name: 'Home',
           component: () => import('@/views/Home.vue')
         },
-        // 宠物领养服务 - 修改路径为绝对路径
+        // 宠物领养服务 
         {
-          path: '/adoption/petAdoption',           // 改为绝对路径 /
+          path: '/adoption/petAdoption',           // 改为绝对路径
           name: 'PetAdoption',
           component: () => import('@/views/adoption/PetAdoption.vue')
         },
         {
-          path: '/adoption/petAdoptionDetails/:id',    // 改为绝对路径，添加参数
+          path: '/adoption/petAdoptionDetails/:id', // 改为绝对路径
           name: 'PetAdoptionDetails',
           component: () => import('@/views/adoption/PetAdoptionDetails.vue')
         },

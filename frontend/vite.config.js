@@ -16,9 +16,10 @@ export default defineConfig({
   },
   server: {
     port: 5173,
-    // 关键配置：所有路由都回退到 index.html，解决 history 模式刷新 404 问题
+    // 关键配置：所有路由都回退到 index.html
     historyApiFallback: true,
     proxy: {
+      // 只代理 API 请求，不代理页面路由
       '/api': {
         target: 'http://localhost:8080',
         changeOrigin: true
@@ -35,10 +36,11 @@ export default defineConfig({
         target: 'http://localhost:8080',
         changeOrigin: true
       },
-      '/adoption': {
-        target: 'http://localhost:8080',
-        changeOrigin: true
-      },
+      // ❌ 删除 '/adoption' 代理，让前端路由处理
+      // '/adoption': {
+      //   target: 'http://localhost:8080',
+      //   changeOrigin: true
+      // },
       '/donation': {
         target: 'http://localhost:8080',
         changeOrigin: true
