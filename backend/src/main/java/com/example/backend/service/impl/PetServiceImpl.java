@@ -1,12 +1,15 @@
 package com.example.backend.service.impl;
 
-import com.example.backend.dao.PetRepository;
 import com.example.backend.entity.Pet;
+import com.example.backend.repository.PetRepository;
 import com.example.backend.service.PetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PetServiceImpl implements PetService {
@@ -41,14 +44,18 @@ public class PetServiceImpl implements PetService {
 
     @Override
     public List<Pet> searchPets(String keyword) {
-        return petRepository.findByNameContainingIgnoreCase(keyword);
+        if (!StringUtils.hasText(keyword)) {
+            return getAvailablePets();
+        }
+        return petRepository.findByNameContainingIgnoreCaseAndStatus(
+                keyword, Pet.PetStatus.AVAILABLE);
     }
 
     @Override
     public List<Pet> getPetsByType(String type) {
         try {
-            Pet.PetType petType = Pet.PetType.valueOf(type.toUpperCase());
-            return petRepository.findByType(petType);
+            Pet.PetType petType = Pet.PetType.valueOf(type);
+            return petRepository.findByTypeAndStatus(petType, Pet.PetStatus.AVAILABLE);
         } catch (IllegalArgumentException e) {
             return List.of();
         }

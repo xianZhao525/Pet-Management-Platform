@@ -8,9 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.util.StringUtils;
+
 import java.util.HashMap;
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/pet")
@@ -19,7 +20,7 @@ public class PetController {
     @Autowired
     private PetService petService;
 
-    // ==================== 原有页面渲染接口（保留给JSP用）====================
+    // ==================== JSP 页面接口（保留）====================
 
     @GetMapping("/list")
     public String listPets(@RequestParam(required = false) String keyword, Model model) {
@@ -46,12 +47,8 @@ public class PetController {
         return "pet/detail";
     }
 
-    // ==================== 新增：REST API 接口（给Vue前端用）====================
+    // ==================== REST API 接口（Vue前端用）====================
 
-    /**
-     * 获取宠物列表（JSON）
-     * GET /pet/api/list?keyword=xxx&type=xxx
-     */
     @GetMapping("/api/list")
     @ResponseBody
     public ApiResponse<Map<String, Object>> getPetListApi(
@@ -62,7 +59,7 @@ public class PetController {
                 ? petService.searchPets(keyword)
                 : petService.getAvailablePets();
 
-        // 如果前端传了type参数，再过滤一次
+        // 按类型过滤
         if (StringUtils.hasText(type) && !"ALL".equals(type)) {
             pets = pets.stream()
                     .filter(p -> p.getType().name().equals(type))
@@ -81,10 +78,6 @@ public class PetController {
         return ApiResponse.success(data);
     }
 
-    /**
-     * 获取宠物详情（JSON）
-     * GET /pet/api/detail?id=2
-     */
     @GetMapping("/api/detail")
     @ResponseBody
     public ApiResponse<Pet> getPetDetailApi(@RequestParam Long id) {
@@ -95,10 +88,6 @@ public class PetController {
         return ApiResponse.success(pet);
     }
 
-    /**
-     * 获取可领养宠物列表（JSON）
-     * GET /pet/api/available
-     */
     @GetMapping("/api/available")
     @ResponseBody
     public ApiResponse<List<Pet>> getAvailablePetsApi() {
@@ -106,10 +95,6 @@ public class PetController {
         return ApiResponse.success(pets);
     }
 
-    /**
-     * 搜索宠物（JSON）
-     * GET /pet/api/search?keyword=xxx
-     */
     @GetMapping("/api/search")
     @ResponseBody
     public ApiResponse<List<Pet>> searchPetsApi(@RequestParam String keyword) {

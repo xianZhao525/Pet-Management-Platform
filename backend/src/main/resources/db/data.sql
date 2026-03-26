@@ -267,3 +267,10 @@ VALUES (
         '一点心意，希望能帮到小猫',
         'DON-20240105-005'
     );
+
+-- 修改现有表结构（如果已存在表）
+ALTER TABLE pets
+CHANGE COLUMN image_url image VARCHAR(255) DEFAULT '/images/pets/default.jpg',
+CHANGE COLUMN vaccination vaccinated BOOLEAN DEFAULT FALSE,
+ADD COLUMN dewormed BOOLEAN DEFAULT FALSE,
+MODIFY COLUMN gender ENUM('MALE', 'FEMALE');
