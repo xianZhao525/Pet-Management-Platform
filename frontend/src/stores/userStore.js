@@ -26,15 +26,13 @@ export const useUserStore = defineStore('user', () => {
         try {
             const response = await loginApi(credentials)
             if (response.code === 200) {
-                const { token: newToken, user } = response.data
-
-                token.value = newToken
+                const user = response.data
+                // 如果需要 token，这里可以设置
+                // const { token, user } = response.data
+                token.value = 'dummy-token' // 根据实际 token 情况
                 userInfo.value = user
-
-                // 保存到 localStorage
-                localStorage.setItem('token', newToken)
+                localStorage.setItem('token', 'dummy-token')
                 localStorage.setItem('userInfo', JSON.stringify(user))
-
                 return { success: true, data: response.data }
             } else {
                 return { success: false, message: response.message || '登录失败' }
