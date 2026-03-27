@@ -1,11 +1,12 @@
 package com.example.backend.service.impl;
 
 import com.example.backend.entity.Pet;
-import com.example.backend.repository.PetRepository;
+// import com.example.backend.repository.PetRepository;
 import com.example.backend.service.PetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import com.example.backend.dao.PetRepository;
 
 import java.util.List;
 import java.util.Optional;

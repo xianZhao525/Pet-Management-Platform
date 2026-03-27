@@ -1,16 +1,11 @@
 package com.example.backend.controller.spring;
 
 import com.example.backend.dto.AdminDTO;
-import com.example.backend.dto.PetDTO;
 import com.example.backend.entity.*;
 import com.example.backend.service.AdoptionService;
 import com.example.backend.service.PetService;
 import com.example.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -50,7 +45,6 @@ public class AdminController {
         User admin = (User) session.getAttribute("user");
         model.addAttribute("admin", admin);
 
-        // 获取统计信息
         long pendingAdoptions = adoptionService.getPendingAdoptions().size();
         long availablePets = petService.countByStatus(Pet.PetStatus.AVAILABLE);
         long totalAdoptions = adoptionService.getAdoptionCount();
@@ -61,7 +55,6 @@ public class AdminController {
         model.addAttribute("totalAdoptions", totalAdoptions);
         model.addAttribute("totalUsers", totalUsers);
 
-        // 获取最近的领养申请
         List<Adoption> recentAdoptions = adoptionService.getPendingAdoptions();
         if (recentAdoptions.size() > 5) {
             recentAdoptions = recentAdoptions.subList(0, 5);
@@ -73,7 +66,6 @@ public class AdminController {
 
     // ==================== 宠物管理 ====================
 
-    // 宠物列表页
     @GetMapping("/pets")
     public String managePets(
             HttpSession session,
@@ -87,20 +79,14 @@ public class AdminController {
             return "redirect:/user/login";
         }
 
-        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
-        Page<Pet> petPage;
-
+        List<Pet> pets;
         if (keyword != null && !keyword.trim().isEmpty()) {
-            // 搜索宠物
-            List<Pet> searchResults = petService.searchPets(keyword);
-            // 这里需要实现分页逻辑，暂时返回所有结果
-            model.addAttribute("pets", searchResults);
+            pets = petService.searchPets(keyword);
         } else {
-            // 获取所有宠物
-            List<Pet> allPets = petService.getAllPets();
-            model.addAttribute("pets", allPets);
+            pets = petService.getAllPets();
         }
 
+        model.addAttribute("pets", pets);
         model.addAttribute("currentPage", page);
         model.addAttribute("pageSize", size);
         model.addAttribute("keyword", keyword);
@@ -109,22 +95,19 @@ public class AdminController {
         return "admin/pet/list";
     }
 
-    // 显示添加宠物页面
     @GetMapping("/pets/add")
     public String showAddPetForm(HttpSession session, Model model) {
         if (!checkAdmin(session)) {
             return "redirect:/user/login";
         }
 
-        AdminDTO adminDTO = new AdminDTO();
-        model.addAttribute("adminDTO", adminDTO);
+        model.addAttribute("adminDTO", new AdminDTO());
         model.addAttribute("petTypes", Pet.PetType.values());
         model.addAttribute("petStatuses", Pet.PetStatus.values());
 
         return "admin/pet/add";
     }
 
-    // 处理添加宠物
     @PostMapping("/pets/add")
     public String addPet(@Valid @ModelAttribute AdminDTO adminDTO,
             BindingResult result,
@@ -149,12 +132,17 @@ public class AdminController {
             pet.setStatus(Pet.PetStatus.valueOf(adminDTO.getPetStatus()));
             pet.setBreed(adminDTO.getPetBreed());
             pet.setAge(adminDTO.getPetAge());
+            // ✅ 修复：gender 直接是 String
             pet.setGender(adminDTO.getPetGender());
             pet.setColor(adminDTO.getPetColor());
             pet.setDescription(adminDTO.getPetDescription());
             pet.setHealthStatus(adminDTO.getHealthStatus());
-            pet.setVaccination(adminDTO.getVaccination());
-            pet.setImageUrl(adminDTO.getImageUrl());
+            // ✅ 修复：vaccinated 是 Boolean
+            pet.setVaccinated("已接种".equals(adminDTO.getVaccination()) ||
+                    "true".equalsIgnoreCase(adminDTO.getVaccination()));
+            pet.setDewormed(false); // 默认
+            // ✅ 修复：image 代替 imageUrl
+            pet.setImage(adminDTO.getImageUrl());
 
             if (adminDTO.getOwnerId() != null) {
                 userService.getUserById(adminDTO.getOwnerId()).ifPresent(pet::setOwner);
@@ -173,7 +161,6 @@ public class AdminController {
         }
     }
 
-    // 显示编辑宠物页面
     @GetMapping("/pets/edit/{id}")
     public String showEditPetForm(@PathVariable Long id,
             HttpSession session,
@@ -193,12 +180,15 @@ public class AdminController {
         adminDTO.setPetStatus(pet.getStatus().name());
         adminDTO.setPetBreed(pet.getBreed());
         adminDTO.setPetAge(pet.getAge());
+        // ✅ 修复：gender 是 String
         adminDTO.setPetGender(pet.getGender());
         adminDTO.setPetColor(pet.getColor());
         adminDTO.setPetDescription(pet.getDescription());
         adminDTO.setHealthStatus(pet.getHealthStatus());
-        adminDTO.setVaccination(pet.getVaccination());
-        adminDTO.setImageUrl(pet.getImageUrl());
+        // ✅ 修复：vaccinated 转 String
+        adminDTO.setVaccination(Boolean.TRUE.equals(pet.getVaccinated()) ? "已接种" : "未接种");
+        // ✅ 修复：image 代替 imageUrl
+        adminDTO.setImageUrl(pet.getImage());
 
         if (pet.getOwner() != null) {
             adminDTO.setOwnerId(pet.getOwner().getId());
@@ -211,7 +201,6 @@ public class AdminController {
         return "admin/pet/edit";
     }
 
-    // 处理编辑宠物
     @PostMapping("/pets/edit")
     public String editPet(@Valid @ModelAttribute AdminDTO adminDTO,
             BindingResult result,
@@ -238,12 +227,16 @@ public class AdminController {
             pet.setStatus(Pet.PetStatus.valueOf(adminDTO.getPetStatus()));
             pet.setBreed(adminDTO.getPetBreed());
             pet.setAge(adminDTO.getPetAge());
+            // ✅ 修复：gender 是 String
             pet.setGender(adminDTO.getPetGender());
             pet.setColor(adminDTO.getPetColor());
             pet.setDescription(adminDTO.getPetDescription());
             pet.setHealthStatus(adminDTO.getHealthStatus());
-            pet.setVaccination(adminDTO.getVaccination());
-            pet.setImageUrl(adminDTO.getImageUrl());
+            // ✅ 修复：vaccinated 是 Boolean
+            pet.setVaccinated("已接种".equals(adminDTO.getVaccination()) ||
+                    "true".equalsIgnoreCase(adminDTO.getVaccination()));
+            // ✅ 修复：image 代替 imageUrl
+            pet.setImage(adminDTO.getImageUrl());
 
             if (adminDTO.getOwnerId() != null) {
                 userService.getUserById(adminDTO.getOwnerId()).ifPresent(pet::setOwner);
@@ -264,7 +257,6 @@ public class AdminController {
         }
     }
 
-    // 删除宠物
     @PostMapping("/pets/delete/{id}")
     public String deletePet(@PathVariable Long id,
             HttpSession session,
@@ -286,7 +278,6 @@ public class AdminController {
 
     // ==================== 领养申请管理 ====================
 
-    // 领养申请列表
     @GetMapping("/adoptions")
     public String manageAdoptions(
             HttpSession session,
@@ -299,16 +290,7 @@ public class AdminController {
             return "redirect:/user/login";
         }
 
-        List<Adoption> adoptions;
-
-        if (status != null && !status.trim().isEmpty()) {
-            // 按状态筛选
-            adoptions = adoptionService.getPendingAdoptions();
-        } else {
-            // 获取所有申请
-            adoptions = adoptionService.getPendingAdoptions();
-            // 注意：这里需要实现分页查询，暂时返回所有
-        }
+        List<Adoption> adoptions = adoptionService.getPendingAdoptions();
 
         model.addAttribute("adoptions", adoptions);
         model.addAttribute("currentPage", page);
@@ -318,7 +300,6 @@ public class AdminController {
         return "admin/adoption/list";
     }
 
-    // 显示申请详情
     @GetMapping("/adoptions/detail/{id}")
     public String adoptionDetail(@PathVariable Long id,
             HttpSession session,
@@ -332,7 +313,6 @@ public class AdminController {
             Adoption adoption = adoptionService.getAdoptionById(id);
             model.addAttribute("adoption", adoption);
 
-            // 准备审核表单
             AdminDTO adminDTO = new AdminDTO();
             adminDTO.setAdoptionId(id);
             model.addAttribute("adminDTO", adminDTO);
@@ -344,7 +324,6 @@ public class AdminController {
         }
     }
 
-    // 批准领养申请
     @PostMapping("/adoptions/approve")
     public String approveAdoption(@ModelAttribute AdminDTO adminDTO,
             HttpSession session,
@@ -364,7 +343,6 @@ public class AdminController {
         return "redirect:/admin/adoptions";
     }
 
-    // 拒绝领养申请
     @PostMapping("/adoptions/reject")
     public String rejectAdoption(@ModelAttribute AdminDTO adminDTO,
             HttpSession session,
@@ -384,7 +362,6 @@ public class AdminController {
         return "redirect:/admin/adoptions";
     }
 
-    // 完成领养
     @PostMapping("/adoptions/complete/{id}")
     public String completeAdoption(@PathVariable Long id,
             HttpSession session,
@@ -406,7 +383,6 @@ public class AdminController {
 
     // ==================== 用户管理 ====================
 
-    // 用户列表
     @GetMapping("/users")
     public String manageUsers(
             HttpSession session,
@@ -420,7 +396,6 @@ public class AdminController {
         }
 
         List<User> users;
-
         if (keyword != null && !keyword.trim().isEmpty()) {
             users = userService.searchUsers(keyword);
         } else {
