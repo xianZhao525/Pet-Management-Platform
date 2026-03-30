@@ -25,3 +25,13 @@ export const getAdoptionDetail = (id) => {
 export const applyAdoptionApi = (data) => {
     return request.post('/adoption/api/apply', data)
 }
+
+/**
+ * 取消领养申请
+ * @param {number} id 申请ID
+ * @returns {Promise}
+ */
+export const cancelAdoption = (id) => {
+    // 根据后端接口设计，路径参数方式更符合 RESTful 风格
+    return request.post(`/adoption/cancel/${id}`)
+}

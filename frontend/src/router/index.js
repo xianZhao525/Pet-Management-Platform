@@ -42,6 +42,11 @@ const router = createRouter({
           name: 'PetAdoptionDetails',
           component: () => import('@/views/adoption/PetAdoptionDetails.vue')
         },
+        {
+          path: '/adoption/my',
+          name: 'MyApplications',
+          component: () => import('@/views/adoption/MyApplications.vue')
+        },
         // 宠物爱心捐赠服务
         {
           path: '/donation/charityDonation',       // 改为绝对路径

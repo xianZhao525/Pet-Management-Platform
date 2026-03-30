@@ -43,19 +43,19 @@
                 </template>
                 
                 <!-- 普通用户菜单 -->
-                <template v-else>
+                <!-- <template v-else>
                   <el-dropdown-item command="userDashboard">
                     <i class="fas fa-user-circle"></i> 个人中心
                   </el-dropdown-item>
-                </template>
+                </template> -->
                 
                 <!-- 公共菜单 -->
                 <el-dropdown-item command="myApplications">
                   <i class="fas fa-file-alt"></i> 我的申请
                 </el-dropdown-item>
-                <el-dropdown-item command="editProfile">
+                <!-- <el-dropdown-item command="editProfile">
                   <i class="fas fa-edit"></i> 编辑资料
-                </el-dropdown-item>
+                </el-dropdown-item> -->
                 <el-dropdown-item divided command="logout">
                   <i class="fas fa-sign-out-alt"></i> 退出登录
                 </el-dropdown-item>
