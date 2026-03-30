@@ -76,7 +76,9 @@
     import { ref, onMounted } from 'vue'
     import { useRouter } from 'vue-router'
     //import { List } from '@element-plus/icons-vue'
-    import { getDashboardStats, getRecentAdoptions } from '@/api/adminApi'
+    //import { getDashboardStats, getRecentAdoptions } from '@/api/adminApi'
+    //import { getAdminDashboard, getRecentAdoptions } from '@/api/adminApi'
+    import { getAdminDashboard } from '@/api/adminApi' 
 
     const router = useRouter()
 
@@ -164,18 +166,18 @@
 
     // 加载统计数据
     const loadStats = async () => {
-    try {
-        const response = await getDashboardStats()
+      try {
+        const response = await getAdminDashboard()
         if (response.code === 200) {
-        const data = response.data
-        stats.value[0].value = data.pendingAdoptions || 0
-        stats.value[1].value = data.availablePets || 0
-        stats.value[2].value = data.totalAdoptions || 0
-        stats.value[3].value = data.totalUsers || 0
+          const data = response.data
+          stats.value[0].value = data.pendingAdoptions || 0
+          stats.value[1].value = data.availablePets || 0
+          stats.value[2].value = data.totalAdoptions || 0
+          stats.value[3].value = data.totalUsers || 0
         }
-    } catch (error) {
+      } catch (error) {
         console.error('加载统计数据失败', error)
-    }
+      }
     }
 
     // 加载最近申请

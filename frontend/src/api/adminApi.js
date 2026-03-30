@@ -96,3 +96,9 @@ export const deleteDonation = (id) => {
 export const getDonationStatistics = () => {
     return request.get('/donation/statistics')
 }
+
+// 获取最近领养申请
+export const getRecentAdoptions = () => {
+    return request.get('/admin/adoptions/recent')
+}
+

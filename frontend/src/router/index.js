@@ -73,6 +73,11 @@ const router = createRouter({
           name: 'AdministratorConsole',
           component: () => import('@/views/admin/user/AdministratorConsole.vue')
         },
+        {
+          path: 'dashboard',
+          name: 'AdminDashboard',
+          component: () => import('@/views/admin/user/AdministratorConsole.vue')
+        },
         // 管理员宠物管理
         {
           path: 'pet/addPet',                     // 相对路径

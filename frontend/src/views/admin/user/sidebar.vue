@@ -13,7 +13,7 @@
       :collapse-transition="false"
       router
     >
-      <el-menu-item index="/admin/dashboard">
+      <el-menu-item index="/admin/user/administratorConsole">
         <i class="fas fa-tachometer-alt"></i>
         <span>控制台</span>
       </el-menu-item>
