@@ -8,6 +8,7 @@ import com.example.backend.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,10 +23,23 @@ public class ApiUserController {
     private UserService userService;
 
     @PostMapping("/register")
-    public ApiResponse<User> register(@RequestBody UserDTO userDTO) {
+    public ApiResponse<Map<String, Object>> register(@RequestBody UserDTO userDTO) {
         try {
             User user = userService.registerUser(userDTO);
-            return ApiResponse.success("注册成功", user);
+            Map<String, Object> data = new HashMap<>();
+            data.put("id", user.getId());
+            data.put("username", user.getUsername());
+            data.put("email", user.getEmail());
+            // 关键：处理 phone，若为 Collection 则取第一个元素
+            Object phoneObj = user.getPhone();
+            if (phoneObj instanceof Collection) {
+                Collection<?> coll = (Collection<?>) phoneObj;
+                data.put("phone", coll.isEmpty() ? null : coll.iterator().next());
+            } else {
+                data.put("phone", phoneObj);
+            }
+            data.put("role", user.getRole());
+            return ApiResponse.success("注册成功", data);
         } catch (Exception e) {
             return ApiResponse.error(e.getMessage());
         }

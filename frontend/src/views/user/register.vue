@@ -366,22 +366,32 @@
 
       loading.value = true
       try {
-        const response = await register({
+        // 构建请求数据，只包含必要字段
+        const requestData = {
           username: registerForm.username,
           phone: registerForm.phone,
-          email: registerForm.email,
           password: registerForm.password,
           role: registerForm.role,
           adminCode: registerForm.adminCode
-        })
+        }
+        // 仅当邮箱有内容时才添加（避免发送空字符串）
+        if (registerForm.email && registerForm.email.trim() !== '') {
+          requestData.email = registerForm.email
+        }
+
+        const response = await register(requestData)
 
         if (response.code === 200) {
           ElMessage.success('注册成功，请登录')
+          // 清除可能残留的旧 token
+          localStorage.removeItem('token')
+          localStorage.removeItem('userInfo')
           router.push('/login')
         } else {
           errorMessage.value = response.message || '注册失败'
         }
       } catch (error) {
+        console.error('注册错误:', error)
         errorMessage.value = '注册失败，请稍后重试'
       } finally {
         loading.value = false

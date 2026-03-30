@@ -12,15 +12,15 @@ export const register = (data) => {
 
 // 用户登出
 export const logout = () => {
-    return request.get('/user/logout')
+    return request.get('/api/user/logout')   // ✅ 改为 /api 前缀
 }
 
-// 获取当前用户信息（从 session）
+// 获取当前用户信息
 export const getCurrentUser = () => {
-    return request.get('/user/info')
+    return request.get('/api/user/info')     // ✅ 改为 /api 前缀
 }
 
 // 用户个人中心
 export const getUserDashboard = () => {
-    return request.get('/user/dashboard')
+    return request.get('/api/user/dashboard') // ✅ 改为 /api 前缀（如果后端有对应接口）
 }
